@@ -10,7 +10,7 @@ import java.util.Random;
 @RestController
 public class BanjoTwo {
 
-    public static final long MAX_SLEEP_TIME = 10;
+    public static final long MAX_SLEEP_TIME = 100;
     private final Random random = new Random(System.currentTimeMillis());
 
     @PostMapping

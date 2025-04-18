@@ -1,5 +1,6 @@
-package com.duelingbanjos.demo.controller;
+package com.duelingbanjos.demo.controller.client;
 
+import com.duelingbanjos.demo.controller.BanjoOne;
 import com.duelingbanjos.demo.model.Music;
 import com.duelingbanjos.demo.repository.ResultRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,8 @@ public class RestTemplateBanjo extends BanjoOne {
                         Music.class
                 );
 
-        return getResponseTime(this.getClass().getSimpleName(), musicResponse, true);
+        double responseTime = saveResponseTime(musicResponse);
+
+        return getResponseTime(this.getClass().getSimpleName(), responseTime);
     }
 }

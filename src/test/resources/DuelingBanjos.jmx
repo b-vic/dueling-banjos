@@ -5,20 +5,18 @@
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="RestTemplate Users" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="RestTemplate Users">
         <boolProp name="ThreadGroup.delayedStart">true</boolProp>
-        <intProp name="ThreadGroup.num_threads">100</intProp>
-        <intProp name="ThreadGroup.ramp_time">10</intProp>
+        <intProp name="ThreadGroup.num_threads">200</intProp>
+        <intProp name="ThreadGroup.ramp_time">30</intProp>
         <longProp name="ThreadGroup.duration">10</longProp>
         <longProp name="ThreadGroup.delay">1</longProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
-          <stringProp name="LoopController.loops">1000</stringProp>
+          <stringProp name="LoopController.loops">5000</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
       </ThreadGroup>
@@ -37,7 +35,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
             <boolProp name="ResultCollector.error_logging">true</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -112,20 +110,32 @@
           </ResultCollector>
           <hashTree/>
         </hashTree>
+        <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time">
+          <intProp name="ActionProcessor.action">1</intProp>
+          <intProp name="ActionProcessor.target">0</intProp>
+          <stringProp name="ActionProcessor.duration">0</stringProp>
+        </TestAction>
+        <hashTree>
+          <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Pause">
+            <stringProp name="ConstantTimer.delay">100</stringProp>
+            <stringProp name="RandomTimer.range">10</stringProp>
+          </UniformRandomTimer>
+          <hashTree/>
+        </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="RestClient Users" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="RestClient Users">
         <boolProp name="ThreadGroup.delayedStart">true</boolProp>
-        <intProp name="ThreadGroup.num_threads">100</intProp>
-        <intProp name="ThreadGroup.ramp_time">10</intProp>
+        <intProp name="ThreadGroup.num_threads">200</intProp>
+        <intProp name="ThreadGroup.ramp_time">30</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
-          <stringProp name="LoopController.loops">1000</stringProp>
+          <stringProp name="LoopController.loops">5000</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RestClient" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="RestClient">
           <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
           <stringProp name="HTTPSampler.port">8080</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
@@ -139,7 +149,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
             <boolProp name="ResultCollector.error_logging">true</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -214,20 +224,32 @@
           </ResultCollector>
           <hashTree/>
         </hashTree>
+        <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time">
+          <intProp name="ActionProcessor.action">1</intProp>
+          <intProp name="ActionProcessor.target">0</intProp>
+          <stringProp name="ActionProcessor.duration">0</stringProp>
+        </TestAction>
+        <hashTree>
+          <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Pause">
+            <stringProp name="ConstantTimer.delay">100</stringProp>
+            <stringProp name="RandomTimer.range">10</stringProp>
+          </UniformRandomTimer>
+          <hashTree/>
+        </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="WebClient Sync Users" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="WebClient Sync Users">
         <boolProp name="ThreadGroup.delayedStart">true</boolProp>
-        <intProp name="ThreadGroup.num_threads">100</intProp>
-        <intProp name="ThreadGroup.ramp_time">10</intProp>
+        <intProp name="ThreadGroup.num_threads">200</intProp>
+        <intProp name="ThreadGroup.ramp_time">30</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
-          <stringProp name="LoopController.loops">1000</stringProp>
+          <stringProp name="LoopController.loops">5000</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="WebClientSync" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="WebClientSync">
           <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
           <stringProp name="HTTPSampler.port">8080</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
@@ -316,17 +338,29 @@
           </ResultCollector>
           <hashTree/>
         </hashTree>
+        <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time">
+          <intProp name="ActionProcessor.action">1</intProp>
+          <intProp name="ActionProcessor.target">0</intProp>
+          <stringProp name="ActionProcessor.duration">0</stringProp>
+        </TestAction>
+        <hashTree>
+          <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Pause">
+            <stringProp name="ConstantTimer.delay">100</stringProp>
+            <stringProp name="RandomTimer.range">10</stringProp>
+          </UniformRandomTimer>
+          <hashTree/>
+        </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="WebClient Async Users">
         <boolProp name="ThreadGroup.delayedStart">true</boolProp>
-        <intProp name="ThreadGroup.num_threads">100</intProp>
-        <intProp name="ThreadGroup.ramp_time">10</intProp>
+        <intProp name="ThreadGroup.num_threads">200</intProp>
+        <intProp name="ThreadGroup.ramp_time">30</intProp>
         <longProp name="ThreadGroup.duration">30</longProp>
         <longProp name="ThreadGroup.delay">10</longProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <stringProp name="ThreadGroup.on_sample_error">stoptest</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
-          <stringProp name="LoopController.loops">1000</stringProp>
+          <stringProp name="LoopController.loops">5000</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
       </ThreadGroup>
@@ -418,6 +452,18 @@
             </objProp>
             <stringProp name="filename"></stringProp>
           </ResultCollector>
+          <hashTree/>
+        </hashTree>
+        <TestAction guiclass="TestActionGui" testclass="TestAction" testname="Think Time">
+          <intProp name="ActionProcessor.action">1</intProp>
+          <intProp name="ActionProcessor.target">0</intProp>
+          <stringProp name="ActionProcessor.duration">0</stringProp>
+        </TestAction>
+        <hashTree>
+          <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="Pause">
+            <stringProp name="ConstantTimer.delay">100</stringProp>
+            <stringProp name="RandomTimer.range">10</stringProp>
+          </UniformRandomTimer>
           <hashTree/>
         </hashTree>
       </hashTree>

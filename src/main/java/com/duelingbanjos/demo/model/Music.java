@@ -31,4 +31,5 @@ public class Music {
     public void setSleepTime(long sleepTime) {
         this.sleepTime = sleepTime;
     }
+
 }

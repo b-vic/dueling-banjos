@@ -26,13 +26,15 @@ public class AppConfig {
 
     @Bean
     WebClient webClient() {
-        ConnectionProvider provider = ConnectionProvider.builder("fixed")
-                .pendingAcquireTimeout(Duration.ofSeconds(120))
-                .pendingAcquireMaxCount(20000)
-                .maxConnections(2000)
-                .build();
-
-        return WebClient.builder().clientConnector(new ReactorClientHttpConnector(HttpClient.create(provider))).build();
+//Increase capacity as such:
+//        ConnectionProvider provider = ConnectionProvider.builder("customProvider")
+//                .pendingAcquireTimeout(Duration.ofSeconds(120))
+//                .pendingAcquireMaxCount(2000)
+//                .maxConnections(500)
+//                .build();
+//
+//        return WebClient.builder().clientConnector(new ReactorClientHttpConnector(HttpClient.create(provider))).build();
+        return WebClient.builder().build();
     }
 
 }

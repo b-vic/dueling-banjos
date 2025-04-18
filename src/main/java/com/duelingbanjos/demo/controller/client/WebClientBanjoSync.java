@@ -1,5 +1,6 @@
-package com.duelingbanjos.demo.controller;
+package com.duelingbanjos.demo.controller.client;
 
+import com.duelingbanjos.demo.controller.BanjoOne;
 import com.duelingbanjos.demo.model.Music;
 import com.duelingbanjos.demo.repository.ResultRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +32,10 @@ public class WebClientBanjoSync extends BanjoOne {
                 .retrieve()
                 .bodyToMono(Music.class)
                 .block(); //makes our async client sync
-        saveResponseTime(musicResponse);
 
-        return getResponseTime(this.getClass().getSimpleName(), musicResponse, true);
+        double responseTime = saveResponseTime(musicResponse);
+
+        return getResponseTime(this.getClass().getSimpleName(), responseTime);
     }
 
 }

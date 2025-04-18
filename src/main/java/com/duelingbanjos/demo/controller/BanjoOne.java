@@ -10,9 +10,9 @@ import java.util.UUID;
 public abstract class BanjoOne {
 
     @Value("http://127.0.0.1:8081")
-    String banjoTwoUrl; //ideally this is running on a separate server
+    protected String banjoTwoUrl; //ideally this is running on a separate server
 
-    ResultRepository repository;
+    protected ResultRepository repository;
 
     public Music makeMusic() {
         long startTime = System.nanoTime();
@@ -23,17 +23,16 @@ public abstract class BanjoOne {
         return music;
     }
 
-    //Do save is to prevent Async client from saving results until the callback occurs later:
-    String getResponseTime(String banjoType, Music music, boolean doSave) {
-        return banjoType + "," + music.getId() + "," + (doSave ? saveResponseTime(music) : "0");
+    protected String getResponseTime(String banjoType, double responseTime) {
+        return banjoType + "," + responseTime;
     }
 
-    double saveResponseTime(Music music) {
+    protected double saveResponseTime(Music music) {
         Result result = new Result();
         result.setId(music.getId().toString());
         result.setType(this.getClass().getSimpleName());
-        result.setResponse(getResponseTime(music));
-        return repository.save(result).getResponse();
+        result.setResponseTime(getResponseTime(music));
+        return repository.save(result).getResponseTime();
     }
 
     private static double getResponseTime(Music music) {

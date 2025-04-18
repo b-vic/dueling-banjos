@@ -14,7 +14,7 @@ public class Result {
     private String type;
 
     @Column
-    private double response;
+    private double responseTime;
 
     public String getId() {
         return id;
@@ -32,11 +32,11 @@ public class Result {
         this.type = type;
     }
 
-    public double getResponse() {
-        return response;
+    public double getResponseTime() {
+        return responseTime;
     }
 
-    public void setResponse(double response) {
-        this.response = response;
+    public void setResponseTime(double responseTime) {
+        this.responseTime = responseTime;
     }
 }
