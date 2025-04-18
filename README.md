@@ -28,3 +28,19 @@ Final results are saved to H2 database since WebClient Async is a callback not a
 ### SQL results (include random sleep time subtracted - only known at runtime):
 
 <img alt="H2-results" src="https://github.com/user-attachments/assets/a04554a1-6788-4000-b4ce-ed6272e1c0b1" />
+
+
+SQL query for results:
+
+`SELECT
+    type,
+    ROUND(avg(response_time),2) as Avg,
+    ROUND(PERCENTILE_CONT(0.50) WITHIN GROUP(ORDER BY response_time),2) as Median,
+    ROUND(PERCENTILE_CONT(0.95) WITHIN GROUP(ORDER BY response_time),2) as P95th,
+    ROUND(PERCENTILE_CONT(0.99) WITHIN GROUP(ORDER BY response_time),2) as P99th,
+    count(1) as TotalCalls
+FROM
+    result
+GROUP BY
+   type`
+   
