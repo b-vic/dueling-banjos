@@ -2,19 +2,23 @@
 
 Evaluation of **RestTemplate** performance compared to the new **RestClient**, **WebClient sync** (blocking) and **WebClient async** (non-blocking/subscribe).
 
-Test involves Banjo One (above REST clients) calling Banjo Two (normal API).  Banjo Two API sleeps for a random number of milliseconds (0 to 100) to simulate real activity occuring like a database call or accessing an external system.  NOTE: This time is subtracted from the final performance results in the database at the end (NOT the jmeter results however).  This means WebClient Async JMeter time doen't include the sleep time since that happens after the initial request and before the response.
+Test involves Banjo One (above REST clients) calling Banjo Two (normal API).  Banjo Two API sleeps for a random number of milliseconds (0 to 100) to simulate real activity occuring like a database call or accessing an external system.  
 
-The test plan consists of 200 users (threads) of each type of client running concurrently.  In order to reduce overloading the JVMs, think times were introduced which is more realistic.  Maximum available ports needed to be adjusted to run on Windows (Intel Core Ultra 5 1.3 GHz with 16GB RAM).
+NOTE: This time is subtracted from the final performance results at the end of this report (NOT the jmeter results however).  This means WebClient Async JMeter time doesn't include the second API's sleep time since that happens after the initial request and before the final response (subscribe).
+
+The test plan consists of 200 users (threads) of each of the 4 types of clients running concurrently.  In order to reduce overloading the JVMs, think times of 100ms between requests were introduced to be more realistic.  Scaling would be required without this.
+
+Maximum available ports needed to be adjusted to run on Windows 11, specs: Intel Core Ultra 5 1.3 GHz with 16GB RAM.
 
 See JMeter Test Suite under src/test/resources to try it out!
 
-Final results are saved to H2 database since WebClient Async is a callback not a blocking thread, so its actual time taken is not known by JMeter, only in the code.
+Final results are saved to H2 database since WebClient Async is a callback not a blocking thread, so its actual time taken is not known by JMeter, only in the code at runtime after substracting the random JVM2 sleep time.
 
 ## Observations:
 
-- RestClient and WebClient (sync) were operating nearly identically throughout the test - had to check the code wasn't the same by mistake!
-- WebClient (async) finished it's 1,000,000 async requests while the others were still at 700,000
-- RestTemplate had roughly 50K more requests still to run when RestClient/WebClient(sync) finished
+- RestClient and WebClient (sync) were operating nearly identically throughout the entire test - had to check the test wasn't misconfigured by mistake!
+- WebClient (async) finished it's 1,000,000 async requests while the others were still reaching 700,000
+- RestTemplate had roughly 50K more requests still to run when RestClient/WebClient(sync) had finished
 
 ### JMeter Results:
 
