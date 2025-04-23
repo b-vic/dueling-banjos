@@ -5,6 +5,7 @@ import com.duelingbanjos.demo.model.Music;
 import com.duelingbanjos.demo.repository.ResultRepository;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public abstract class BanjoOne {
@@ -32,6 +33,7 @@ public abstract class BanjoOne {
         result.setId(music.getId().toString());
         result.setType(this.getClass().getSimpleName());
         result.setResponseTime(getResponseTime(music));
+        result.setCreationTime(LocalDateTime.now());
         return repository.save(result).getResponseTime();
     }
 

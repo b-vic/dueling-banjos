@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Result {
 
@@ -15,6 +17,9 @@ public class Result {
 
     @Column
     private double responseTime;
+
+    @Column
+    private LocalDateTime creationTime;
 
     public String getId() {
         return id;
@@ -38,5 +43,13 @@ public class Result {
 
     public void setResponseTime(double responseTime) {
         this.responseTime = responseTime;
+    }
+
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
     }
 }
