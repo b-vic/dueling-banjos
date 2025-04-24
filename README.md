@@ -2,9 +2,9 @@
 
 Evaluation of **RestTemplate** performance compared to Spring's new **RestClient**.  Also comparing it to WebFlux **WebClient sync** (blocking) and **WebClient async** (non-blocking/subscribe).
 
-Test involves Banjo One (above 4 REST clients) calling Banjo Two (a simple API).  The Banjo Two API however sleeps for a random number of milliseconds (1 to 50) to simulate real activity occurring like a database call or accessing an external system.  
+Test involves _Banjo One_ (above 4 REST clients) calling _Banjo Two_ (a simple API).  The Banjo Two API sleeps for a random number of milliseconds (1 to 50) to simulate real activity occurring like a database call or accessing an external system.  
 
-NOTE: This time is subtracted from the final performance results at the end of this report (NOT the jmeter results however as the sleep time is not known by jmeter).  This means WebClient Async JMeter time doesn't include the second API's sleep time since that happens after the initial request and before the final response (subscribe).  For the other 3, the time is inclusive.
+NOTE: This time is subtracted from the final performance results at the end of this report (NOT the JMeter results as the sleep time is not known by JMeter since its internal).  This means WebClient Async JMeter time doesn't include the second API's sleep time since that happens after the initial request and _before_ the final response is sent (subscribe).  For the other 3, the time is inclusive in JMeter.  SQL times exclude any sleep time.
 
 The test plan consists of 200 users (threads) of each of the 4 types of clients running 1,000,000 calls.  In order to reduce overloading the JVMs, think times of 100-110ms between requests were introduced to be more realistic.  Scaling or throttling would be required without this, particularly for the callback scenario as it overloads the JVM threads.
 
@@ -20,7 +20,8 @@ Final results are saved to H2 database since WebClient Async is a callback not a
 
 - RestClient and WebClient (sync) were operating nearly identically throughout every version of the test - had to check the test wasn't misconfigured by mistake!
 - WebClient (async) has a significantly improved overall throughput but a similar per call time when compared to RestClient / WebClientSync
-- RestTemplate is starting to show its age, upgrade to RestClient is recommended, it has had it's day
+- RestTemplate is starting to show its age, but still was in keepign with the average results
+- Recommendation is to upgrade to RestClient if you are in the Spring 6 version
 
 ### SQL results (include random sleep time subtracted - only known at runtime):
 
@@ -33,13 +34,13 @@ Final results are saved to H2 database since WebClient Async is a callback not a
 
 ### JMeter Results:
 
-| Label          | # Samples | Average | Median | 90% Line | 95% Line | 99% Line | Min | Max | Error % | Throughput | Received KB/sec | Sent KB/sec |
-|----------------|-----------|---------|--------|----------|----------|----------|-----|-----|---------|------------|-----------------|-------------|
-| RestTemplate   | 1000000   | 34      | 35     | 55       | 59       | 64       | 2   | 83  | 0.00%   | 1314.80856 | 251.46          | 165.64      |
-| RestClient     | 1000000   | 27      | 27     | 47       | 49       | 51       | 1   | 76  | 0.00%   | 1441.242   | 276.26          | 178.75      |
-| WebClientSync  | 1000000   | 27      | 27     | 47       | 49       | 51       | 1   | 71  | 0.00%   | 1441.37911 | 280.52          | 182.99      |
-| WebClientAsync | 1000000   | 0       | 0      | 1        | 1        | 1        | 0   | 23  | 0.00%   | 1787.00029 | 325.83          | 228.61      |
-| TOTAL          | 4000000   | 22      | 21     | 48       | 51       | 60       | 0   | 83  | 0.00%   | 1308.72194 | 248.62          | 165.19      |
+| Label          | Average | Median | 90% Line | 95% Line | 99% Line | Min | Max | Error % | Throughput | Received KB/s | Sent KB/s |
+|----------------|---------|--------|----------|----------|----------|-----|-----|---------|------------|---------------|-----------|
+| RestTemplate   | 34      | 35     | 55       | 59       | 64       | 2   | 83  | 0.00%   | 1314.80856 | 251.46        | 165.64    |
+| RestClient     | 27      | 27     | 47       | 49       | 51       | 1   | 76  | 0.00%   | 1441.242   | 276.26        | 178.75    |
+| WebClientSync  | 27      | 27     | 47       | 49       | 51       | 1   | 71  | 0.00%   | 1441.37911 | 280.52        | 182.99    |
+| WebClientAsync | 0       | 0      | 1        | 1        | 1        | 0   | 23  | 0.00%   | 1787.00029 | 325.83        | 228.61    |
+| TOTAL          | 22      | 21     | 48       | 51       | 60       | 0   | 83  | 0.00%   | 1308.72194 | 248.62        | 165.19    |
 
 SQL query for results:
 
