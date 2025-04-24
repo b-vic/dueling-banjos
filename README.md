@@ -1,4 +1,4 @@
-# dueling-banjos
+# dueling-banjos: Spring REST client comparison
 
 Evaluation of **RestTemplate** performance compared to Spring's new **RestClient**.  Also comparing it to WebFlux **WebClient sync** (blocking) and **WebClient async** (non-blocking/subscribe).
 
