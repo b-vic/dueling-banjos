@@ -10,13 +10,15 @@ import java.util.Random;
 @RestController
 public class BanjoTwo {
 
-    public static final long MAX_SLEEP_TIME = 100;
+    public static final long MIN_SLEEP_TIME = 1;
+    public static final long MAX_SLEEP_TIME = 50;
+
     private final Random random = new Random(System.currentTimeMillis());
 
     @PostMapping
     public Music playBanjoTwo(@RequestBody Music music) {
         Music responseMusic = new Music();
-        long sleepTime = random.nextLong(MAX_SLEEP_TIME);
+        long sleepTime = random.nextLong(MIN_SLEEP_TIME, MAX_SLEEP_TIME);
         try {
             //Banjo two sleeps to simulate external activity like a db call
             //This time will be subtracted from perf results since we send it back

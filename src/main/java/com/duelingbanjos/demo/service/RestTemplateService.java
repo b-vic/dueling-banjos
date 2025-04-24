@@ -1,26 +1,21 @@
-package com.duelingbanjos.demo.controller.client;
+package com.duelingbanjos.demo.service;
 
-import com.duelingbanjos.demo.controller.BanjoOne;
 import com.duelingbanjos.demo.model.Music;
 import com.duelingbanjos.demo.repository.ResultRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-@RestController
-@RequestMapping("resttemplate")
-public class RestTemplateBanjo extends BanjoOne {
+@Service
+public class RestTemplateService extends BaseService {
 
     private final RestTemplate restTemplate;
 
-    public RestTemplateBanjo(RestTemplate restTemplate, ResultRepository repository) {
+    public RestTemplateService(RestTemplate restTemplate, ResultRepository repository) {
         this.restTemplate = restTemplate;
-        this.repository = repository;
+        this.resultRepository = repository;
     }
 
-    @GetMapping
-    public String playBanjo() {
+    public String playMusic() {
         Music music = makeMusic();
 
         Music musicResponse = restTemplate

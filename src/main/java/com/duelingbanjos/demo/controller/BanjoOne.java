@@ -1,44 +1,44 @@
 package com.duelingbanjos.demo.controller;
 
-import com.duelingbanjos.demo.entity.Result;
-import com.duelingbanjos.demo.model.Music;
-import com.duelingbanjos.demo.repository.ResultRepository;
-import org.springframework.beans.factory.annotation.Value;
+import com.duelingbanjos.demo.service.RestClientService;
+import com.duelingbanjos.demo.service.RestTemplateService;
+import com.duelingbanjos.demo.service.WebClientAsyncService;
+import com.duelingbanjos.demo.service.WebClientSyncService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
+@RestController
+public class BanjoOne {
 
-public abstract class BanjoOne {
+    private final RestClientService restClientService;
+    private final RestTemplateService restTemplateService;
+    private final WebClientSyncService webClientSyncService;
+    private final WebClientAsyncService webClientAsyncService;
 
-    @Value("http://127.0.0.1:8081")
-    protected String banjoTwoUrl; //ideally this is running on a separate server
-
-    protected ResultRepository repository;
-
-    public Music makeMusic() {
-        long startTime = System.nanoTime();
-        UUID uuid = UUID.randomUUID();
-        Music music = new Music();
-        music.setStartTime(startTime);
-        music.setId(uuid);
-        return music;
+    public BanjoOne(RestClientService restClientService, RestTemplateService restTemplateService, WebClientSyncService webClientSyncService, WebClientAsyncService webClientAsyncService) {
+        this.restClientService = restClientService;
+        this.restTemplateService = restTemplateService;
+        this.webClientSyncService = webClientSyncService;
+        this.webClientAsyncService = webClientAsyncService;
     }
 
-    protected String getResponseTime(String banjoType, double responseTime) {
-        return banjoType + "," + responseTime;
+    @GetMapping("resttemplate")
+    public String playRestTemplateBanjo() {
+        return restTemplateService.playMusic();
     }
 
-    protected double saveResponseTime(Music music) {
-        Result result = new Result();
-        result.setId(music.getId().toString());
-        result.setType(this.getClass().getSimpleName());
-        result.setResponseTime(getResponseTime(music));
-        result.setCreationTime(LocalDateTime.now());
-        return repository.save(result).getResponseTime();
+    @GetMapping("restclient")
+    public String playRestClientBanjo() {
+        return restClientService.playMusic();
     }
 
-    private static double getResponseTime(Music music) {
-        return (System.nanoTime() - music.getStartTime()) / 1_000_000.0 - music.getSleepTime();
+    @GetMapping("webclientasync")
+    public String playWebClientAsyncBanjo() {
+        return webClientAsyncService.playMusic();
     }
 
+    @GetMapping("webclientsync")
+    public String playWebClientSyncBanjo() {
+        return webClientSyncService.playMusic();
+    }
 }

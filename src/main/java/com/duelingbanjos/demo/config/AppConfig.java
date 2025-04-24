@@ -2,14 +2,9 @@ package com.duelingbanjos.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
-import reactor.netty.resources.ConnectionProvider;
-
-import java.time.Duration;
 
 @Configuration
 public class AppConfig {
@@ -26,7 +21,7 @@ public class AppConfig {
 
     @Bean
     WebClient webClient() {
-//Increase capacity as such:
+//Increase capacity as needed / system is able:
 //        ConnectionProvider provider = ConnectionProvider.builder("customProvider")
 //                .pendingAcquireTimeout(Duration.ofSeconds(120))
 //                .pendingAcquireMaxCount(2000)
