@@ -4,9 +4,9 @@ Evaluation of Spring **RestTemplate** performance compared to Spring's new **Res
 
 Test involves _Banjo One_ (above 4 REST clients) calling _Banjo Two_ (a simple API).  The Banjo Two API sleeps for a random number of milliseconds (1 to 50) to simulate activity occurring like a database call or accessing an external system.  
 
-The test plan consists of 200 users (threads) of each of the 4 types of clients running 1,000,000 API calls.  In order to reduce overloading the JVMs, think times of 100-110ms between requests were introduced to be more realistic.  Scaling or throttling would be required without this, particularly for the callback scenario as it overloads the JVM threads during the subscribe phase.
+The test plan consists of 200 users (threads) of each of the 4 types of clients running 1,000,000 API calls.  In order to reduce overloading the JVMs, random think times of 100-110ms between requests were introduced to be more realistic.  Scaling or throttling would be required without this, particularly for the callback scenario as it overloads the JVM threads during the subscribe phase.
 
-Restart of JVM performed after each of the million calls were made with 10 initial warmup calls (excluded from results) to allow like for like baseline.
+Restart of JVM performed after each of the 1 million client calls were made with 10 initial warmup calls (excluded from results) to allow like for like baseline.
 
 Maximum available ports needed to be adjusted to run on Windows 11 with specs: Intel Core Ultra 5 1.3 GHz (12 core) with 16GB RAM.  Additionally, "timed wait" on the port closing needed to be lowered from 2 minutes to 30 seconds to resolve connection limitation issues.
 
@@ -18,19 +18,19 @@ Final results are saved to H2 database since WebClient Async is a callback not a
 
 - RestClient and WebClient (sync) were operating nearly identically throughout every version of the test - had to check the test wasn't misconfigured by mistake!
 - WebClient (async) has a significantly improved overall throughput but a similar per call time when compared to RestClient / WebClientSync
-- RestTemplate is starting to show its age, but still was in keepign with the average results, so no immediate rush to replace it yet
+- RestTemplate is starting to show its age, but still was in keeping with the average results, so no immediate rush to replace it yet, new projects should start with RestClient however
 - Recommendation is to upgrade to RestClient if you are in the Spring 6 version as its a relatively straightforward change
 
 ### SQL results (include random sleep time subtracted - only known at runtime):
 
 | Call Client    | Average | Median | 90th Percentile | 95th Percentile | 99th Percentile | Total Calls | Test Duration (min:sec) |
-|----------------|---------|--------|-----------------|-----------------|-----------------|-------------|----------------------------|
-| RestTemplate   | 9.10    | 8.99   | 16.36           | 17.33           | 18.92           | 1,000,000   | 12:40.528464               |
-| RestClient     | 1.60    | 1.31   | 2.59            | 3.08            | 3.87            | 1,000,000   | 11:33.803078               |
-| WebClientSync  | 1.61    | 1.35   | 2.59            | 3.07            | 3.93            | 1,000,000   | 11:33.711818               |
-| WebClientAsync | 1.62    | 1.42   | 2.56            | 3.04            | 3.91            | 1,000,000   | 09:19.613708               |
+|----------------|---------|--------|-----------------|-----------------|-----------------|-------------|-------------------------|
+| RestTemplate   | 9.10    | 8.99   | 16.36           | 17.33           | 18.92           | 1,000,000   | 12:40.528464            |
+| RestClient     | 1.60    | 1.31   | 2.59            | 3.08            | 3.87            | 1,000,000   | 11:33.803078            |
+| WebClientSync  | 1.61    | 1.35   | 2.59            | 3.07            | 3.93            | 1,000,000   | 11:33.711818            |
+| WebClientAsync | 1.62    | 1.42   | 2.56            | 3.04            | 3.91            | 1,000,000   | 09:19.613708            |
 
-### JMeter Results:
+### JMeter Results (WebClientAsync does not include sleep nor final response)
 
 | Label          | Avg | Med | 90% | 95% | 99% | Min | Max | Thru-put | Recv KB/s | Sent KB/s |
 |----------------|-----|-----|-----|-----|-----|-----|-----|----------|-----------|-----------|
