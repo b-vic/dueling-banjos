@@ -21,7 +21,7 @@ Final results are saved to H2 database since WebClient Async is a callback not a
 - RestTemplate is starting to show its age, but still was in keeping with the average results, so no immediate rush to replace it yet, new projects should start with RestClient however
 - Recommendation is to upgrade to RestClient if you are in the Spring 6 version as its a relatively straightforward change
 
-### SQL results (include random sleep time subtracted - only known at runtime):
+### SQL results (random sleep times remove - only known at runtime):
 
 | Call Client    | Average | Median | 90th Percentile | 95th Percentile | 99th Percentile | Total Calls | Test Duration (min:sec) | Throughput (ops/s) |
 |----------------|---------|--------|-----------------|-----------------|-----------------|-------------|-------------------------|--------------------|
@@ -30,7 +30,7 @@ Final results are saved to H2 database since WebClient Async is a callback not a
 | WebClientSync  | 1.61    | 1.35   | 2.59            | 3.07            | 3.93            | 1,000,000   | 11:33.711818            | 1441.52            |
 | WebClientAsync | 1.62    | 1.42   | 2.56            | 3.04            | 3.91            | 1,000,000   | 09:19.613708            | 1786.95            |
 
-### JMeter Results (WebClientAsync does not include sleep nor final response)
+### JMeter Results (WebClientAsync below does not include sleep nor final response, the others do)
 
 | Label          | Avg | Med | 90% | 95% | 99% | Min | Max | Thru-put | Recv KB/s | Sent KB/s |
 |----------------|-----|-----|-----|-----|-----|-----|-----|----------|-----------|-----------|
