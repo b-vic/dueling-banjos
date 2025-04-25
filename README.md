@@ -23,12 +23,12 @@ Final results are saved to H2 database since WebClient Async is a callback not a
 
 ### SQL results (include random sleep time subtracted - only known at runtime):
 
-| Call Client    | Average | Median | 90th Percentile | 95th Percentile | 99th Percentile | Total Calls | Test Duration (min:sec) |
-|----------------|---------|--------|-----------------|-----------------|-----------------|-------------|-------------------------|
-| RestTemplate   | 9.10    | 8.99   | 16.36           | 17.33           | 18.92           | 1,000,000   | 12:40.528464            |
-| RestClient     | 1.60    | 1.31   | 2.59            | 3.08            | 3.87            | 1,000,000   | 11:33.803078            |
-| WebClientSync  | 1.61    | 1.35   | 2.59            | 3.07            | 3.93            | 1,000,000   | 11:33.711818            |
-| WebClientAsync | 1.62    | 1.42   | 2.56            | 3.04            | 3.91            | 1,000,000   | 09:19.613708            |
+| Call Client    | Average | Median | 90th Percentile | 95th Percentile | 99th Percentile | Total Calls | Test Duration (min:sec) | Throughput (ops/s) |
+|----------------|---------|--------|-----------------|-----------------|-----------------|-------------|-------------------------|--------------------|
+| RestTemplate   | 9.10    | 8.99   | 16.36           | 17.33           | 18.92           | 1,000,000   | 12:40.528464            | 1314.88            |
+| RestClient     | 1.60    | 1.31   | 2.59            | 3.08            | 3.87            | 1,000,000   | 11:33.803078            | 1441.33            |
+| WebClientSync  | 1.61    | 1.35   | 2.59            | 3.07            | 3.93            | 1,000,000   | 11:33.711818            | 1441.52            |
+| WebClientAsync | 1.62    | 1.42   | 2.56            | 3.04            | 3.91            | 1,000,000   | 09:19.613708            | 1786.95            |
 
 ### JMeter Results (WebClientAsync does not include sleep nor final response)
 
